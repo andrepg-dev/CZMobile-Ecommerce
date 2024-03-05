@@ -17,42 +17,25 @@ export const SalesItems = async () => {
 };
 
 const getItems = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/items`);
+  // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/items`);
+  const res = await GET_ITEMS()
   const data: Array<Item> = await res.json();
 
   return data.slice(13, 25);
 };
 
 
-// import gsmarena from 'gsmarena-api';
+import gsmarena from 'gsmarena-api';
 
-// interface Deal {
-//   deal: {
-//     memory: string;
-//     storeImg: string;
-//     price: number;
-//     currency: string;
-//     discount: number;
-//   };
-// }
+const newItems: Array<Item> = [];
 
-// export interface Item extends Deal {
-//   name: string;
-//   img: string;
-//   url: string;
-//   id: string;
-//   description: string;
-// }
+async function GET_ITEMS() {
+  const items = await gsmarena.deals.getDeals();
 
-// const newItems: Array<Item> = [];
+  for (let i = 0; i < items.length; i++) {
+    const { name, img, url, id, description, deal } = items[i];
+    newItems.push({ name, img, url, id, description, deal });
+  }
 
-// async function GET_ITEMS() {
-//   const items = await gsmarena.deals.getDeals();
-
-//   for (let i = 0; i < items.length; i++) {
-//     const { name, img, url, id, description, deal } = items[i];
-//     newItems.push({ name, img, url, id, description, deal });
-//   }
-
-//   return Response.json(newItems);
-// }
+  return Response.json(newItems);
+}
