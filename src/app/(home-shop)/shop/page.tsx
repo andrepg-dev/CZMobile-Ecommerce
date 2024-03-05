@@ -6,6 +6,9 @@ import { Searcher } from '@/app/components/shop/search';
 import { Suspense } from 'react';
 
 export default async function ShopPage() {
+  
+  if(!process.env.NEXT_PUBLIC_API_URL) return null
+
   return (
     <main className='flex flex-col gap-10 text-titulo'>
       <RouterShop />

@@ -4,6 +4,9 @@ import { Sales } from '../components/sales/sales';
 import { Messenger } from '../icons';
 
 export default async function Home() {
+
+  if (!process.env.NEXT_PUBLIC_API_URL) return null
+
   return (
     <main className='flex flex-col gap-10 pt-10 md:px-medium px-mobile'>
       <Sales />
